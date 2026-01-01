@@ -3,7 +3,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-logo">
-          <img src="Assets/icons_assets/Logo.svg" alt="Little Lemon logo" />
+          <img src="/Assets/icons_assets/Logo.svg" alt="Little Lemon logo" />
         </div>
         
         <div className="footer-section">
@@ -30,9 +30,9 @@ function Footer() {
         <div className="footer-section">
           <h4>Social Media Links</h4>
           <ul>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Twitter</a></li>
+            <li><a href="https://www.facebook.com/littlelemon" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.instagram.com/littlelemon" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li><a href="https://www.twitter.com/littlelemon" target="_blank" rel="noopener noreferrer">Twitter</a></li>
           </ul>
         </div>
       </div>

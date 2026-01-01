@@ -13,7 +13,7 @@ function Main() {
           <button className="btn-primary">Reserve a table</button>
         </div>
         <div className="hero-image">
-          <img src="Assets/icons_assets/restauranfood.jpg" alt="Restaurant food" />
+          <img src="/Assets/icons_assets/restauranfood.jpg" alt="Restaurant food" />
         </div>
       </section>
 
@@ -25,7 +25,7 @@ function Main() {
         </div>
         <div className="specials-cards">
           <article className="card">
-            <img src="Assets/icons_assets/greek salad.jpg" alt="Greek Salad" />
+            <img src="/Assets/icons_assets/greek salad.jpg" alt="Greek Salad" />
             <div className="card-content">
               <div className="card-header">
                 <h3>Greek Salad</h3>
@@ -40,7 +40,7 @@ function Main() {
           </article>
 
           <article className="card">
-            <img src="Assets/icons_assets/bruchetta.svg" alt="Bruschetta" />
+            <img src="/Assets/icons_assets/bruchetta.svg" alt="Bruschetta" />
             <div className="card-content">
               <div className="card-header">
                 <h3>Bruschetta</h3>
@@ -55,7 +55,7 @@ function Main() {
           </article>
 
           <article className="card">
-            <img src="Assets/icons_assets/lemon dessert.jpg" alt="Lemon Dessert" />
+            <img src="/Assets/icons_assets/lemon dessert.jpg" alt="Lemon Dessert" />
             <div className="card-content">
               <div className="card-header">
                 <h3>Lemon Dessert</h3>
@@ -77,28 +77,28 @@ function Main() {
         <div className="testimonials-cards">
           <article className="testimonial-card">
             <p className="rating">⭐⭐⭐⭐⭐</p>
-            <img src="Assets/icons_assets/Mario and Adrian A.jpg" alt="Customer" />
+            <img src="/Assets/icons_assets/Mario and Adrian A.jpg" alt="Customer" />
             <h4>Sarah M.</h4>
             <p>"Amazing food and great service!"</p>
           </article>
 
           <article className="testimonial-card">
             <p className="rating">⭐⭐⭐⭐⭐</p>
-            <img src="Assets/icons_assets/Mario and Adrian b.jpg" alt="Customer" />
+            <img src="/Assets/icons_assets/Mario and Adrian b.jpg" alt="Customer" />
             <h4>John D.</h4>
             <p>"Best Mediterranean restaurant in Chicago!"</p>
           </article>
 
           <article className="testimonial-card">
             <p className="rating">⭐⭐⭐⭐⭐</p>
-            <img src="Assets/icons_assets/restaurant chef B.jpg" alt="Customer" />
+            <img src="/Assets/icons_assets/restaurant chef B.jpg" alt="Customer" />
             <h4>Emily R.</h4>
             <p>"The lemon dessert is to die for!"</p>
           </article>
 
           <article className="testimonial-card">
             <p className="rating">⭐⭐⭐⭐⭐</p>
-            <img src="Assets/icons_assets/restaurant.jpg" alt="Customer" />
+            <img src="/Assets/icons_assets/restaurant.jpg" alt="Customer" />
             <h4>Michael P.</h4>
             <p>"Authentic flavors and cozy atmosphere!"</p>
           </article>
@@ -117,8 +117,8 @@ function Main() {
           </p>
         </div>
         <div className="about-images">
-          <img src="Assets/icons_assets/Mario and Adrian A.jpg" alt="Mario and Adrian" className="about-img-1" />
-          <img src="Assets/icons_assets/restaurant chef B.jpg" alt="Restaurant chef" className="about-img-2" />
+          <img src="/Assets/icons_assets/Mario and Adrian A.jpg" alt="Mario and Adrian" className="about-img-1" />
+          <img src="/Assets/icons_assets/restaurant chef B.jpg" alt="Restaurant chef" className="about-img-2" />
         </div>
       </section>
     </main>
