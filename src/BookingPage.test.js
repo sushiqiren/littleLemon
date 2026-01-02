@@ -121,3 +121,180 @@ describe('BookingPage reducer functions', () => {
     delete window.fetchAPI;
   });
 });
+
+// Error handling tests for BookingPage
+describe('BookingPage error handling', () => {
+  beforeEach(() => {
+    // Mock console.error to avoid cluttering test output
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    console.error.mockRestore();
+    delete window.fetchAPI;
+    delete window.submitAPI;
+  });
+
+  test('initializeTimes returns fallback times when fetchAPI is not available', () => {
+    delete window.fetchAPI;
+    
+    const result = initializeTimes();
+    
+    // Should return fallback times
+    expect(result).toEqual([
+      '17:00',
+      '18:00',
+      '19:00',
+      '20:00',
+      '21:00',
+      '22:00'
+    ]);
+  });
+
+  test('initializeTimes returns fallback times when fetchAPI throws error', () => {
+    window.fetchAPI = jest.fn(() => {
+      throw new Error('API Error');
+    });
+    
+    const result = initializeTimes();
+    
+    // Should return fallback times
+    expect(result).toEqual([
+      '17:00',
+      '18:00',
+      '19:00',
+      '20:00',
+      '21:00',
+      '22:00'
+    ]);
+    expect(console.error).toHaveBeenCalledWith('Error initializing times:', expect.any(Error));
+  });
+
+  test('initializeTimes returns fallback when fetchAPI returns empty array', () => {
+    window.fetchAPI = jest.fn(() => []);
+    
+    const result = initializeTimes();
+    
+    // Should return fallback times since API returned empty array
+    expect(result).toEqual([
+      '17:00',
+      '18:00',
+      '19:00',
+      '20:00',
+      '21:00',
+      '22:00'
+    ]);
+  });
+
+  test('initializeTimes returns fallback when fetchAPI returns non-array', () => {
+    window.fetchAPI = jest.fn(() => null);
+    
+    const result = initializeTimes();
+    
+    // Should return fallback times
+    expect(result).toEqual([
+      '17:00',
+      '18:00',
+      '19:00',
+      '20:00',
+      '21:00',
+      '22:00'
+    ]);
+  });
+
+  test('updateTimes returns current state when fetchAPI throws error', () => {
+    const currentState = ['17:00', '18:00'];
+    window.fetchAPI = jest.fn(() => {
+      throw new Error('API Error');
+    });
+    
+    const result = updateTimes(currentState, { type: 'UPDATE_TIMES', date: '2026-01-15' });
+    
+    // Should return current state when error occurs
+    expect(result).toEqual(currentState);
+    expect(console.error).toHaveBeenCalledWith('Error updating times:', expect.any(Error));
+  });
+
+  test('updateTimes returns current state when fetchAPI returns empty array', () => {
+    const currentState = ['17:00', '18:00'];
+    window.fetchAPI = jest.fn(() => []);
+    
+    const result = updateTimes(currentState, { type: 'UPDATE_TIMES', date: '2026-01-15' });
+    
+    // Should keep current state when API returns empty array
+    expect(result).toEqual(currentState);
+  });
+
+  test('updateTimes returns current state when no date provided', () => {
+    const currentState = ['17:00', '18:00'];
+    window.fetchAPI = jest.fn();
+    
+    const result = updateTimes(currentState, { type: 'UPDATE_TIMES' });
+    
+    // Should return current state when no date
+    expect(result).toEqual(currentState);
+    expect(window.fetchAPI).not.toHaveBeenCalled();
+  });
+
+  test('submitForm displays error when formData is invalid', async () => {
+    window.submitAPI = jest.fn(() => true);
+    
+    render(
+      <MemoryRouter>
+        <BookingPage />
+      </MemoryRouter>
+    );
+    
+    // Get form elements and try to submit with missing data
+    const submitButton = screen.getByDisplayValue(/Make Your reservation/i);
+    
+    // Button should be disabled initially (no date selected)
+    expect(submitButton).toBeDisabled();
+  });
+
+  test('submitForm displays error when submitAPI is not available', async () => {
+    delete window.submitAPI;
+    window.fetchAPI = jest.fn(() => ['17:00', '18:00']);
+    
+    render(
+      <MemoryRouter>
+        <BookingPage />
+      </MemoryRouter>
+    );
+    
+    // Fill the form
+    const dateInput = screen.getByLabelText(/Choose date/i);
+    fireEvent.change(dateInput, { target: { value: '2026-01-15' } });
+    
+    const submitButton = screen.getByDisplayValue(/Make Your reservation/i);
+    
+    // Submit the form
+    fireEvent.click(submitButton);
+    
+    // Should show error message about service unavailable
+    await screen.findByText(/Booking service is currently unavailable/i);
+  });
+
+  test('submitForm displays error when submitAPI returns false', async () => {
+    window.submitAPI = jest.fn(() => false);
+    window.fetchAPI = jest.fn(() => ['17:00', '18:00']);
+    
+    render(
+      <MemoryRouter>
+        <BookingPage />
+      </MemoryRouter>
+    );
+    
+    // Fill the form
+    const dateInput = screen.getByLabelText(/Choose date/i);
+    fireEvent.change(dateInput, { target: { value: '2026-01-15' } });
+    
+    const submitButton = screen.getByDisplayValue(/Make Your reservation/i);
+    
+    // Submit the form
+    fireEvent.click(submitButton);
+    
+    // Should show error message
+    await screen.findByText(/Failed to submit your reservation/i);
+  });
+});

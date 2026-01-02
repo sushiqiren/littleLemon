@@ -1,18 +1,26 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookingForm from './BookingForm';
 
 // Initialize available times
 export function initializeTimes() {
-  // Create a Date object for today's date
-  const today = new Date();
-  
-  // Use the fetchAPI function from the external script
-  if (window.fetchAPI) {
-    return window.fetchAPI(today);
+  try {
+    // Create a Date object for today's date
+    const today = new Date();
+    
+    // Use the fetchAPI function from the external script
+    if (window.fetchAPI) {
+      const times = window.fetchAPI(today);
+      // Validate that we got an array with times
+      if (Array.isArray(times) && times.length > 0) {
+        return times;
+      }
+    }
+  } catch (error) {
+    console.error('Error initializing times:', error);
   }
   
-  // Fallback if API is not available
+  // Fallback if API is not available or fails
   return [
     '17:00',
     '18:00',
@@ -27,12 +35,20 @@ export function initializeTimes() {
 export function updateTimes(state, action) {
   switch (action.type) {
     case 'UPDATE_TIMES':
-      // Use the fetchAPI function with the selected date
-      if (action.date && window.fetchAPI) {
-        const selectedDate = new Date(action.date);
-        return window.fetchAPI(selectedDate);
+      try {
+        // Use the fetchAPI function with the selected date
+        if (action.date && window.fetchAPI) {
+          const selectedDate = new Date(action.date);
+          const times = window.fetchAPI(selectedDate);
+          // Validate that we got an array
+          if (Array.isArray(times)) {
+            return times.length > 0 ? times : state;
+          }
+        }
+      } catch (error) {
+        console.error('Error updating times:', error);
       }
-      // Fallback to current state if no date or API not available
+      // Fallback to current state if no date or API not available or fails
       return state;
     default:
       return state;
@@ -43,18 +59,47 @@ function BookingPage() {
   // Use reducer for available booking times
   const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
   
+  // State for submission status
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  
   // Hook for navigation
   const navigate = useNavigate();
   
   // Function to submit form data
-  const submitForm = (formData) => {
-    // Submit to API
-    if (window.submitAPI) {
-      const success = window.submitAPI(formData);
-      if (success) {
-        // Navigate to confirmation page if submission successful
-        navigate('/booking-confirmed');
+  const submitForm = async (formData) => {
+    // Validate form data before submission
+    if (!formData || !formData.date || !formData.time || !formData.guests) {
+      setSubmitError('Please fill in all required fields.');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setSubmitError(null);
+    
+    try {
+      // Submit to API
+      if (window.submitAPI) {
+        // Simulate async API call
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const success = window.submitAPI(formData);
+        
+        if (success) {
+          // Navigate to confirmation page if submission successful
+          navigate('/booking-confirmed');
+        } else {
+          setSubmitError('Failed to submit your reservation. Please try again.');
+          setIsSubmitting(false);
+        }
+      } else {
+        setSubmitError('Booking service is currently unavailable. Please try again later.');
+        setIsSubmitting(false);
       }
+    } catch (error) {
+      console.error('Submission error:', error);
+      setSubmitError('An unexpected error occurred. Please try again or contact support.');
+      setIsSubmitting(false);
     }
   };
 
@@ -70,6 +115,8 @@ function BookingPage() {
           availableTimes={availableTimes}
           dispatch={dispatch}
           submitForm={submitForm}
+          isSubmitting={isSubmitting}
+          submitError={submitError}
         />
       </section>
 

@@ -49,7 +49,7 @@ test('booking confirmation page is displayed when form is submitted', async () =
   expect(window.submitAPI).toHaveBeenCalledWith({
     date: '2026-01-15',
     time: '19:00',
-    guests: '4',
+    guests: 4, // Should be a number, not string
     occasion: 'Anniversary'
   });
   

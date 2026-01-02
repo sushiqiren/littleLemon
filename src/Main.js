@@ -13,7 +13,7 @@ function Main() {
             recipes served with a modern twist.
           </p>
           <Link to="/reservations">
-            <button className="btn-primary">Reserve a table</button>
+            <button className="btn-primary" aria-label="On Click">Reserve a table</button>
           </Link>
         </div>
         <div className="hero-image">
@@ -25,7 +25,7 @@ function Main() {
       <section className="specials">
         <div className="specials-header">
           <h2>Specials</h2>
-          <button className="btn-secondary">Online Menu</button>
+          <button className="btn-secondary" aria-label="On Click">Online Menu</button>
         </div>
         <div className="specials-cards">
           <article className="card">
@@ -39,7 +39,7 @@ function Main() {
                 The famous greek salad of crispy lettuce, peppers, olives and 
                 our Chicago style feta cheese, garnished with crunchy garlic and rosemary croutons.
               </p>
-              <button className="btn-delivery">Order a delivery 🛵</button>
+              <button className="btn-delivery" aria-label="On Click">Order a delivery 🛵</button>
             </div>
           </article>
 
@@ -54,7 +54,7 @@ function Main() {
                 Our Bruschetta is made from grilled bread that has been smeared with 
                 garlic and seasoned with salt and olive oil.
               </p>
-              <button className="btn-delivery">Order a delivery 🛵</button>
+              <button className="btn-delivery" aria-label="On Click">Order a delivery 🛵</button>
             </div>
           </article>
 
@@ -69,7 +69,7 @@ function Main() {
                 This comes straight from grandma's recipe book, every last ingredient 
                 has been sourced and is as authentic as can be imagined.
               </p>
-              <button className="btn-delivery">Order a delivery 🛵</button>
+              <button className="btn-delivery" aria-label="On Click">Order a delivery 🛵</button>
             </div>
           </article>
         </div>

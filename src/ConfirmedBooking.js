@@ -10,7 +10,7 @@ function ConfirmedBooking() {
         <p>We look forward to serving you at Little Lemon!</p>
         <p>You will receive a confirmation email shortly with all the details of your reservation.</p>
         <Link to="/">
-          <button className="btn-primary">Return to Home</button>
+          <button className="btn-primary" aria-label="On Click">Return to Home</button>
         </Link>
       </div>
     </div>
