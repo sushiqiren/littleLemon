@@ -51,7 +51,7 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository** (if not already done):
    ```bash
    git clone https://github.com/sushiqiren/littleLemon
-   cd little-lemon
+   cd littleLemon
    ```
 
 2. **Install dependencies**:
